@@ -1,84 +1,78 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:json_serializable/json_serializable.dart';
 
-void main() {
-  runApp(MyApp(
-    items: List<ListItem>.generate(
-      1000,
-          (i) => i % 6 == 0
-          ? HeadingItem("Heading $i")
-          : MessageItem("Sender $i", "Message body $i"),
-    ),
-  ));
-}
+void main() => runApp(const MyApp());
 
+/// This is the main application widget.
 class MyApp extends StatelessWidget {
-  final List<ListItem> items;
+  const MyApp({Key? key}) : super(key: key);
 
-  MyApp({Key key, @required this.items}) : super(key: key);
+  static const String _title = 'Flutter Code Sample';
 
   @override
   Widget build(BuildContext context) {
-    final title = 'Mixed List';
-
     return MaterialApp(
-      title: title,
+      title: _title,
       home: Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-        ),
-        body: ListView.builder(
-          // Let the ListView know how many items it needs to build.
-          itemCount: items.length,
-          // Provide a builder function. This is where the magic happens.
-          // Convert each item into a widget based on the type of item it is.
-          itemBuilder: (context, index) {
-            final item = items[index];
-
-            return ListTile(
-              title: item.buildTitle(context),
-              subtitle: item.buildSubtitle(context),
-            );
-          },
-        ),
+        appBar: AppBar(title: const Text(_title)),
+        body: const MyStatelessWidget(),
       ),
     );
   }
 }
 
-/// The base class for the different types of items the list can contain.
-abstract class ListItem {
-  /// The title line to show in a list item.
-  Widget buildTitle(BuildContext context);
+/// This is the stateless widget that the main application instantiates.
+class MyStatelessWidget extends StatelessWidget {
+  const MyStatelessWidget({Key? key}) : super(key: key);
 
-  /// The subtitle line, if any, to show in a list item.
-  Widget buildSubtitle(BuildContext context);
-}
-
-/// A ListItem that contains data to display a heading.
-class HeadingItem implements ListItem {
-  final String heading;
-
-  HeadingItem(this.heading);
-
-  Widget buildTitle(BuildContext context) {
-    return Text(
-      heading,
-      style: Theme.of(context).textTheme.headline5,
+  /// might replace Datatable with PaginatedDataTable
+  @override
+  Widget build(BuildContext context) {
+    return DataTable(
+      columns: const <DataColumn>[
+        DataColumn(
+          label: Text(
+            'Name',
+            style: TextStyle(fontStyle: FontStyle.italic),
+          ),
+        ),
+        DataColumn(
+          label: Text(
+            'Age',
+            style: TextStyle(fontStyle: FontStyle.italic),
+          ),
+        ),
+        DataColumn(
+          label: Text(
+            'Role',
+            style: TextStyle(fontStyle: FontStyle.italic),
+          ),
+        ),
+      ],
+      rows: const <DataRow>[
+        DataRow(
+          cells: <DataCell>[
+            DataCell(Text('Sarah')),
+            DataCell(Text('19')),
+            DataCell(Text('Student')),
+          ],
+        ),
+        DataRow(
+          cells: <DataCell>[
+            DataCell(Text('Janine')),
+            DataCell(Text('43')),
+            DataCell(Text('Professor')),
+          ],
+        ),
+        DataRow(
+          cells: <DataCell>[
+            DataCell(Text('William')),
+            DataCell(Text('27')),
+            DataCell(Text('Associate Professor')),
+          ],
+        ),
+      ],
     );
   }
-
-  Widget buildSubtitle(BuildContext context) => null;
-}
-
-/// A ListItem that contains data to display a message.
-class MessageItem implements ListItem {
-  final String sender;
-  final String body;
-
-  MessageItem(this.sender, this.body);
-
-  Widget buildTitle(BuildContext context) => Text(sender);
-
-  Widget buildSubtitle(BuildContext context) => Text(body);
 }
