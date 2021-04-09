@@ -3,45 +3,41 @@ import 'listen.dart';
 import 'getlocation.dart';
 import './settings.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(MyApp());
 
-/// This is the main application widget.
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  static const String _title = 'Flutter Code Sample';
-
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: _title,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('My Work Timer'),
-        ),
-        body: const HomePage(),
+      title: 'My Work Timer',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blueGrey,
       ),
+      home: DataHomePage(),
     );
   }
 }
 
-/// This is the stateless widget that the main application instantiates.
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
 
-  /// might replace Datatable with PaginatedDataTable
+class DataHomePage extends StatelessWidget {
+  final double defaultPadding = 5.0;
+
   @override
   Widget build(BuildContext context) {
-    @override
-    Widget build(BuildContext context) {
-      final List<PopupMenuItem<String>> menuItems = <PopupMenuItem<String>>[];
-      menuItems.add(PopupMenuItem(
-        value: 'Settings',
-        child: Text('Settings'),
-      ));
-      return MaterialApp(
-        title: 'My Work Timer',
-        home: Scaffold(
+
+    final List<PopupMenuItem<String>> menuItems = <PopupMenuItem<String>>[];
+    menuItems.add(PopupMenuItem(
+      value: 'Settings',
+      child: Text('Settings'),
+    ));
+    return MaterialApp(
+      title: 'My Work Timer',
+      theme: ThemeData(
+        primarySwatch: Colors.blueGrey,
+      ),
+      home: Scaffold(
           appBar: AppBar(
             title: Text('My Work Timer'),
             actions: [
@@ -50,70 +46,96 @@ class HomePage extends StatelessWidget {
                   return menuItems.toList();
                 },
                 onSelected: (s) {
-                  if (s == 'Settings') {
+                  if(s=='Settings') {
                     goToSettings(context);
                   }
                 },
               )
             ],
           ),
-          body: DataTable(
-        columns: const <DataColumn>[
-        DataColumn(
-          label: Text(
-          'Name',
-          style: TextStyle(fontStyle: FontStyle.italic),
-        ),
-      ),
-      DataColumn(
-      label: Text(
-      'Age',
-      style: TextStyle(fontStyle: FontStyle.italic),
-      ),
-      ),
-      DataColumn(
-      label: Text(
-      'Role',
-      style: TextStyle(fontStyle: FontStyle.italic),
-      ),
-      ),
-      ],
-      rows: const <DataRow>[
-      DataRow(
-      cells: <DataCell>[
-      DataCell(Text('Sarah')),
-      DataCell(Text('19')),
-      DataCell(Text('Student')),
-      ],
-      ),
-      DataRow(
-      cells: <DataCell>[
-      DataCell(Text('Janine')),
-      DataCell(Text('43')),
-      DataCell(Text('Professor')),
-      ],
-      ),
-      DataRow(
-      cells: <DataCell>[
-      DataCell(Text('William')),
-      DataCell(Text('27')),
-      DataCell(Text('Associate Professor')),
-      ],
-      ),
-      ],
-      )
-
-    )
-    ,
+          body: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                final double availableWidth = constraints.maxWidth;
+                return Column(children: [
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                      ),
+                      Expanded(
+                          child: ProductivityButton(
+                              color: Color(0xff009688),
+                              text: "Work",
+                              onPressed: () => timer.startWork())),
+                      Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                      ),
+                      Expanded(
+                          child: ProductivityButton(
+                              color: Color(0xff607D8B),
+                              text: "Short Break",
+                              onPressed: () => timer.startBreak(true))),
+                      Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                      ),
+                      Expanded(
+                          child: ProductivityButton(
+                              color: Color(0xff455A64),
+                              text: "Long Break",
+                              onPressed:() => timer.startBreak(false))),
+                      Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                      child: StreamBuilder(
+                          initialData: TimerModel('00:00', 1),
+                          stream: timer.stream(),
+                          builder: (BuildContext context, AsyncSnapshot snapshot) {
+                            TimerModel timer = snapshot.data;
+                            return Container(
+                                child: CircularPercentIndicator(
+                                  radius: availableWidth / 2,
+                                  lineWidth: 10.0,
+                                  percent: (timer.percent == null) ? 1 : timer.percent,
+                                  center: Text( (timer.time == null) ? '00:00' : timer.time ,
+                                      style: Theme.of(context).textTheme.headline4),
+                                  progressColor: Color(0xff009688),
+                                ));
+                          })),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                      ),
+                      Expanded(
+                          child: ProductivityButton(
+                              color: Color(0xff212121),
+                              text: 'Stop',
+                              onPressed: () => timer.stopTimer())),
+                      Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                      ),
+                      Expanded(
+                          child: ProductivityButton(
+                              color: Color(0xff009688),
+                              text: 'Restart',
+                              onPressed: () => timer.startTimer())),
+                      Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                      ),
+                    ],
+                  )
+                ]);
+              })),
     );
   }
 
   void emptyMethod() {}
-
   void goToSettings(BuildContext context) {
     print('in gotoSettings');
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => SettingsScreen()));
   }
-}
 }
