@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'listen.dart';
 import 'getlocation.dart';
 import './settings.dart';
+import './widgets.dart';
 
 void main() => runApp(MyApp());
 
