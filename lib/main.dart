@@ -13,93 +13,107 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<PopupMenuItem<String>> menuItems = List<PopupMenuItem<String>>();
-    menuItems.add(PopupMenuItem(
-      value: 'Settings',
-      child: Text('Settings'),
-    ));
-    /// might call some functions, like load data
     return MaterialApp(
       title: _title,
       home: Scaffold(
         appBar: AppBar(
           title: Text('My Work Timer'),
-          actions: [
-            PopupMenuButton<String>(
-              itemBuilder: (BuildContext context) {
-                return menuItems.toList();
-              },
-              onSelected: (s) {
-                if(s=='Settings') {
-                  goToSettings(context);
-                }
-              },
-            )
-          ],
         ),
-        body: const MyStatelessWidget(),
+        body: const HomePage(),
       ),
     );
   }
 }
 
 /// This is the stateless widget that the main application instantiates.
-class MyStatelessWidget extends StatelessWidget {
-  const MyStatelessWidget({Key? key}) : super(key: key);
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   /// might replace Datatable with PaginatedDataTable
   @override
   Widget build(BuildContext context) {
-    return DataTable(
-      columns: const <DataColumn>[
+    @override
+    Widget build(BuildContext context) {
+      final List<PopupMenuItem<String>> menuItems = <PopupMenuItem<String>>[];
+      menuItems.add(PopupMenuItem(
+        value: 'Settings',
+        child: Text('Settings'),
+      ));
+      return MaterialApp(
+        title: 'My Work Timer',
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text('My Work Timer'),
+            actions: [
+              PopupMenuButton<String>(
+                itemBuilder: (BuildContext context) {
+                  return menuItems.toList();
+                },
+                onSelected: (s) {
+                  if (s == 'Settings') {
+                    goToSettings(context);
+                  }
+                },
+              )
+            ],
+          ),
+          body: DataTable(
+        columns: const <DataColumn>[
         DataColumn(
           label: Text(
-            'Name',
-            style: TextStyle(fontStyle: FontStyle.italic),
-          ),
+          'Name',
+          style: TextStyle(fontStyle: FontStyle.italic),
         ),
-        DataColumn(
-          label: Text(
-            'Age',
-            style: TextStyle(fontStyle: FontStyle.italic),
-          ),
-        ),
-        DataColumn(
-          label: Text(
-            'Role',
-            style: TextStyle(fontStyle: FontStyle.italic),
-          ),
-        ),
+      ),
+      DataColumn(
+      label: Text(
+      'Age',
+      style: TextStyle(fontStyle: FontStyle.italic),
+      ),
+      ),
+      DataColumn(
+      label: Text(
+      'Role',
+      style: TextStyle(fontStyle: FontStyle.italic),
+      ),
+      ),
       ],
       rows: const <DataRow>[
-        DataRow(
-          cells: <DataCell>[
-            DataCell(Text('Sarah')),
-            DataCell(Text('19')),
-            DataCell(Text('Student')),
-          ],
-        ),
-        DataRow(
-          cells: <DataCell>[
-            DataCell(Text('Janine')),
-            DataCell(Text('43')),
-            DataCell(Text('Professor')),
-          ],
-        ),
-        DataRow(
-          cells: <DataCell>[
-            DataCell(Text('William')),
-            DataCell(Text('27')),
-            DataCell(Text('Associate Professor')),
-          ],
-        ),
+      DataRow(
+      cells: <DataCell>[
+      DataCell(Text('Sarah')),
+      DataCell(Text('19')),
+      DataCell(Text('Student')),
       ],
+      ),
+      DataRow(
+      cells: <DataCell>[
+      DataCell(Text('Janine')),
+      DataCell(Text('43')),
+      DataCell(Text('Professor')),
+      ],
+      ),
+      DataRow(
+      cells: <DataCell>[
+      DataCell(Text('William')),
+      DataCell(Text('27')),
+      DataCell(Text('Associate Professor')),
+      ],
+      ),
+      ],
+      )
+
+    )
+    ,
     );
   }
-    void emptyMethod() {}
-    void goToSettings(BuildContext context) {
-      print('in gotoSettings');
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => SettingsScreen()));
-    }
+
+  void emptyMethod() {}
+
+  void goToSettings(BuildContext context) {
+    print('in gotoSettings');
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => SettingsScreen()));
+  }
+}
 }
