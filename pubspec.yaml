@@ -28,6 +28,8 @@ dependencies:
 
   json_serializable: ^4.1.0
 
+  shared_preferences: ^2.0.0
+
   weather:
 
   # The following adds the Cupertino Icons font to your application.

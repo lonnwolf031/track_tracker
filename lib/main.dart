@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'listen.dart';
 import 'getlocation.dart';
+import './settings.dart';
 
 void main() => runApp(const MyApp());
 
@@ -12,10 +13,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<PopupMenuItem<String>> menuItems = List<PopupMenuItem<String>>();
+    menuItems.add(PopupMenuItem(
+      value: 'Settings',
+      child: Text('Settings'),
+    ));
+    /// might call some functions, like load data
     return MaterialApp(
       title: _title,
       home: Scaffold(
-        appBar: AppBar(title: const Text(_title)),
+        appBar: AppBar(
+          title: Text('My Work Timer'),
+          actions: [
+            PopupMenuButton<String>(
+              itemBuilder: (BuildContext context) {
+                return menuItems.toList();
+              },
+              onSelected: (s) {
+                if(s=='Settings') {
+                  goToSettings(context);
+                }
+              },
+            )
+          ],
+        ),
         body: const MyStatelessWidget(),
       ),
     );
@@ -75,4 +96,10 @@ class MyStatelessWidget extends StatelessWidget {
       ],
     );
   }
+    void emptyMethod() {}
+    void goToSettings(BuildContext context) {
+      print('in gotoSettings');
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => SettingsScreen()));
+    }
 }
