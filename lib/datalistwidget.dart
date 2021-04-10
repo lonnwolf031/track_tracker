@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+
 class DataList extends StatefulWidget {
 final List photos;
+
+
 
 DataList({Key key, this.photos})
     : assert(photos != null),
