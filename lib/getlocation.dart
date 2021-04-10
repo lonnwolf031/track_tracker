@@ -76,24 +76,5 @@ class _GetLocationState extends State<GetLocationWidget> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          'Location: ' + (_error ?? '${_location ?? "unknown"}'),
-          style: Theme.of(context).textTheme.bodyText1,
-        ),
-        Row(
-          children: <Widget>[
-            ElevatedButton(
-              child: const Text('Get'),
-              onPressed: _getLocation,
-            )
-          ],
-        ),
-      ],
-    );
-  }
+
 }
