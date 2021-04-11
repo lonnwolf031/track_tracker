@@ -3,14 +3,14 @@ import 'package:weather/weather.dart';
 
 enum AppState { NOT_DOWNLOADED, DOWNLOADING, FINISHED_DOWNLOADING }
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatefulWidget {
+class Weather extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  _WeatherState createState() => _WeatherState();
 }
 
-class _MyAppState extends State<MyApp> {
+ /// somewhere pass lat and lon in constructor here
+
+class _WeatherState extends State<Weather> {
   String key = '856822fd8e22db5e1ba48c0e7d69844a';
   late WeatherFactory ws;
   List<Weather> _data = [];
