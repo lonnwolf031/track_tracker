@@ -12,8 +12,9 @@ part 'ride.g.dart';
  */
 
 class Ride extends StatefulWidget{
-  DateTime date;
-  Map ridedata;
+  final DateTime date;
+  @JsonKey(includeIfNull: false)
+  Map? ridedata;
 
   /// add constructor and build()
 
