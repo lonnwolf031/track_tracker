@@ -3,6 +3,7 @@ import 'listen.dart';
 import 'getlocation.dart';
 import 'package:flutter/services.dart';
 import 'package:location/location.dart';
+import 'requestweather.dart';
 import 'dart:async';
 import './settings.dart';
 import './widgets.dart';
@@ -128,6 +129,7 @@ class StartRideRoute extends StatefulWidget {
 
 class _RideState extends State<StartRideRoute> {
   LocationData? currentLocation;
+  late LocationData initLocation;
   late Location location;
   bool _serviceEnabled = false;
   PermissionStatus? _permissionGranted;
@@ -160,10 +162,23 @@ class _RideState extends State<StartRideRoute> {
         return;
       }
     }
-
-    currentLocation =  await location.getLocation();
-
+    ///currentLocation =  await location.getLocation();
+    initLocation =  await location.getLocation();
 }
+
+  void getWeatherData(locData) async {
+    // Fetch the location
+    ///await getLocationData();
+
+    // Fetch the current weather
+    WeatherData weatherData = WeatherData(locationData: locationData);
+    await weatherData.getCurrentTemperature();
+
+    if (weatherData.currentTemperature == null ||
+        weatherData.currentCondition == null) {
+      // todo: Handle no weather
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

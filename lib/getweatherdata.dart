@@ -9,6 +9,23 @@ class Weather extends StatefulWidget {
 }
 
  /// somewhere pass lat and lon in constructor here
+class GetWeatherData {
+  String key = '856822fd8e22db5e1ba48c0e7d69844a';
+  late WeatherFactory ws;
+  List<Weather> _data = [];
+  AppState _state = AppState.NOT_DOWNLOADED;
+  late double lat, lon;
+
+  GetWeatherData(double lat, double lon) {
+    this.lat = lat;
+    this.lon = lon;
+  }
+
+  void get() {
+    Weather w = await ws.currentWeatherByLocation(lat, lon);
+  }
+}
+
 
 class _WeatherState extends State<Weather> {
   String key = '856822fd8e22db5e1ba48c0e7d69844a';
