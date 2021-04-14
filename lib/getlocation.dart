@@ -10,10 +10,10 @@ class GetLocationWidget extends StatefulWidget {
 }
 
 class _GetLocationState extends State<GetLocationWidget> {
-  final Location location = Location();
+  ///final Location location = Location();
 
-  LocationData _currentPosition;
-  String _address,_dateTime;
+  LocationData? _currentPosition;
+  String? _address,_dateTime;
   Location location = Location();
 
 
