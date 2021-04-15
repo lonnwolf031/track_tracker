@@ -144,6 +144,7 @@ class _RideState extends State<StartRideRoute> {
       /// do calculations
     });
     setInitialLocation();
+
   }
 
   void setInitialLocation() async {
@@ -164,15 +165,16 @@ class _RideState extends State<StartRideRoute> {
     }
     ///currentLocation =  await location.getLocation();
     initLocation =  await location.getLocation();
+    await getWeatherData(initLocation);
 }
 
-  void getWeatherData(locData) async {
+  Future getWeatherData(locData) async {
     // Fetch the location
     ///await getLocationData();
 
     // Fetch the current weather
-    WeatherData weatherData = WeatherData(locationData: locationData);
-    await weatherData.getCurrentTemperature();
+    WeatherData weatherData = WeatherData(locData);
+    await weatherData.getCurrentWeather();
 
     if (weatherData.currentTemperature == null ||
         weatherData.currentCondition == null) {
