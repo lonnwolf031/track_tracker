@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'listen.dart';
-import 'getlocation.dart';
 import 'package:flutter/services.dart';
 import 'package:location/location.dart';
 import 'requestweather.dart';
 import 'dart:async';
-import './settings.dart';
-import './widgets.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -141,7 +137,9 @@ class _RideState extends State<StartRideRoute> {
     location = new Location();
     location.onLocationChanged.listen((event) {
       currentLocation = event;
-      /// do calculations
+      /// datetime now
+      /// do calculations (speed only, other calcs at end)
+      ///
     });
     setInitialLocation();
 

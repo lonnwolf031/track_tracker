@@ -16,5 +16,4 @@ class Settings {
   }
   /// use:;   String value = await getValue() ?? "";
 
-
 }

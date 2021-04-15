@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:location/location.dart';
 import 'dart:async';
+import 'wind.dart';
 
 class WeatherData {
   ///WeatherData({@required this.locationData});
@@ -30,6 +31,7 @@ class WeatherData {
         currentCondition = currentWeather['weather'][0]['id'];
         currentWindSpeed = currentWeather['wind']['speed'];
         currentWindDir = currentWeather['wind']['deg'];
+        Wind wind = Wind(currentWindSpeed,currentWindDir);
       } catch (e) {
         print(e);
       }
@@ -39,3 +41,5 @@ class WeatherData {
   }
 
 }
+
+
