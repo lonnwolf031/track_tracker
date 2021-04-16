@@ -18,3 +18,36 @@ out skel qt;
 
 
  */
+
+class GeoService {
+  GeoService({
+    @required this.overpassApi,
+    this.fileName = 'cities_de'
+  }): assert(overpassApi != null);
+  final OverpassApi overpassApi;
+  final String fileName;
+  ...
+  Future<List<Location>> getEntitiesInArea({
+    Location center, SearchType type, double radiusInMetres = 5000
+  }) async {
+    List<ResponseLocation> fetchResult = await this.overpassApi.fetchLocationsAroundCenter(
+        QueryLocation(
+            longitude: center.longitude,
+            latitude: center.latitude
+        ),
+        type.tags,
+        radiusInMetres
+    );
+    List<Location> result = [];
+    fetchResult.forEach((element) {
+      result.add(
+          Location(
+              longitude: element.longitude,
+              latitude: element.latitude,
+              name: element.name
+          )
+      );
+    });
+    return result;
+  }
+}
