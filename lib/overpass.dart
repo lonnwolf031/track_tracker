@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:xml/xml.dart';
 import 'package:http/http.dart';
-import '../models/overpass_query.dart';
+import 'overpassquery.dart';
+
 class OverpassApi {
   static String _apiUrl = 'overpass-api.de';
   static String _path = '/api/interpreter';
