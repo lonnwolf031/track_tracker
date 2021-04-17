@@ -115,6 +115,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    return MaterialButton(
+      child: Text(this.text, style: TextStyle(color: Colors.white)),
+      onPressed: this.onPressed,
+      color: this.color,
+      minWidth: (this.size != null) ? this.size : 0,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
-part 'ride.g.dart';
+part 'ridedata.g.dart';
 
 @JsonSerializable()
 
