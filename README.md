@@ -2,15 +2,10 @@
 
 A new Flutter project.
 
-## Getting Started
+## Development notes
 
-This project is a starting point for a Flutter application.
+I started this project for someone I know whom as a therapist wanted to track stress with clients via a heartrate monitor (over bluetooth). It was a proven concept, but only expensive subscription-based services existed for this.
 
-A few resources to get you started if this is your first Flutter project:
+### Current state of development
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Figuring out how to get desired data from bluetooth heart rate monitor (bluetooth protocols)
